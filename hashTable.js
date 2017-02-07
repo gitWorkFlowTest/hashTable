@@ -20,9 +20,24 @@ var makeHashTable = function() {
   var result = {};
   var storage = [];
   var storageLimit = 1000;
-  result.insert = function(/*...*/ 
-) {
+  result.insert = function(key, value) {
     // TODO: implement `insert()`
+    var hash = getIndexBelowMaxForKey(key);
+    if (storage[hash]) {
+      for (var i = 0; i < storage[hash].length; i++) {
+        if (storage[hash][i]) {
+          if (storage[hash][i][0] === key) {
+            storage[hash][i] = [key, value];
+            return;
+          }
+        }
+      }
+      storage[hash].push([key, value]);
+    } else {
+      var bucket = [];
+      bucket.push([key, value]);
+      storage[hash] = bucket;
+    }
   };
 
   result.retrieve = function(/*...*/ 
