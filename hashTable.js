@@ -40,9 +40,19 @@ var makeHashTable = function() {
     }
   };
 
-  result.retrieve = function(/*...*/ 
-) {
-    // TODO: implement `retrieve()`
+  result.retrieve = function(key) {
+    var hashedKey = getIndexBelowMaxForKey(key, storageLimit);
+
+    var bucket = storage[hashedKey] || [];
+
+    for (var i = 0; i < bucket.length; i++) {
+      var tuple = bucket[i];
+      if (tuple[0] === key) {
+        return tuple[1];
+      }
+    }
+
+    return null;
   };
 
   result.remove = function(/*...*/ 
