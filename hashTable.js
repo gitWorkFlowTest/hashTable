@@ -55,9 +55,18 @@ var makeHashTable = function() {
     return null;
   };
 
-  result.remove = function(/*...*/ 
-) {
-    // TODO: implement `remove()`
+  result.remove = function(key) {
+    var hash = getIndexBelowMaxForKey(key, storageLimit);
+    var bucket = storage[hash];
+    var index = -1;
+
+    bucket.forEach(function(tuple, i) {
+      if (tuple[0] === key) {
+        index = i;
+      }
+    });
+
+    bucket.splice(index, 1);
   };
 
   return result;
